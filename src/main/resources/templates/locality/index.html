@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html   lang="fr"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.mx/thymeleaf/layout"
+        layout:decorate="~{layouts/main}">
+
+<head>
+    <title>Liste de localite</title>
+</head>
+<body>
+
+<div class="container">
+    <div class="container">
+        <div layout:fragment="content">
+            <h1 th:text="${title}">Liste des localités</h1>
+
+            <table class="table" th:unless="${#lists.isEmpty(localities)}">
+
+                <thead class="thead-dark">
+
+                <tr>
+                    <th scope="col">Postal Code</th>
+                    <th scope="col">Locality</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr scope="row" th:each="locality : ${localities}">
+                    <td th:text=" ${locality.postalCode}">1000 </td>
+                    <td th:text=" ${locality.localityName}">Bruxelles</td>
+                <td><a th:href="@{'/localities/' +${locality.id}}">View</a></td>
+                    <td>
+                        <form th:id="|deleteForm-${locality.id}|"
+                              th:action="@{'/localities/delete/'+ ${locality.id}}" th:method="delete">
+                            <!--delete form -->
+
+                            <a href="#"  th:onclick="|if(confirm('Confirm delete locality #${locality.id}'))
+                document.getElementById('deleteForm-${locality.id}').submit();
+                    return false;|">Delete</a> <!-- alert with javascript -->
+
+                        </form>
+                    </td>
+
+            </tr>
+                </tbody>
+
+            </table>
+            <td><nav><a th:href="@{'/localities/add/'}" class="btn btn-primary">Add New Locality</a></nav></td>
+
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:layout="http://www.ultraq.net.mx/thymeleaf/layout"
+      layout:decorate="~{layouts/main}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Création d'un type</title>
+    <style>
+        .fieldError { color: #ff0000; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div layout:fragment="content">
+        <form action="# " th:action="@{'/types/create'}" th:object="${type}" method="post" class="form"> <!-- th:object ci serve per fare collegamento con il model -->
+
+
+            <div class="form-group">
+
+                <input class="form-control" type="text"  th:field="*{typeName}" id="firstname" placeholder="firstname">
+                <div class="alert alert-warning" th:if="${#fields.hasErrors('typeName')}"  th:errors="*{typeName}" th:errorclass="error"></div>
+            </div>
+
+
+            <!-- th:errorclass="error" serve per indicare lo style del errore, il colore che ho definito sopra -->
+            <br/>
+
+            <input class="btn btn-primary" type="submit" value="Submit" /><br/><br/>
+            <!-- class="btn btn-primary" serve per il design del bottone -->
+
+
+            <!-- <div><a th:href="@{/artists/{id}}">annuler</a></div> -->
+            <nav><a th:href="@{/types}">Annuler</a></nav>
+
+        </form>
+
+    </div>
+</div>
+
+</body>
+</html>

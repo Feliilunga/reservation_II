@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.mx/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<head>
+    <title>Fiche d'une localité</title>
+</head>
+<body>
+<div class="container">
+    <div layout:fragment="content">
+        <h1 th:text="|${locality.postalCode}  ${locality.localityName}|">1000 Bruxelles</h1>
+
+        <ul th:unless="${#lists.isEmpty(locality.locations)}">
+
+            <li th:each="location: ${locality.locations}"
+                th:text="${location.designation}">Dexia Art Centre</li>
+
+        </ul>
+        <p th:if="${#lists.isEmpty(locality.locations)}">Aucun lieu de spectacle</p>
+
+        <table>
+        <tr><td><a th:href="@{'/localities/edit/' +${locality.id}}" class="btn btn-default">Edit</a></td>
+        <form th:id="|deleteForm-${locality.id}|"
+              th:action="@{'/localities/delete/'+ ${locality.id}}" th:method="delete">
+            <!--delete form -->
+
+            <td><a href="#"  th:onclick="|if(confirm('Confirm delete locality #${locality.id}'))
+                document.getElementById('deleteForm-${locality.id}').submit();
+                    return false;|" class="btn btn-danger">Delete</a></td> <!-- alert with javascript -->
+
+        </form>
+        </tr>
+
+
+        <tr><td><nav><a th:href="@{/localities}" class="btn btn-link">Back to the Main page</a></nav></td></tr>
+        </table>
+
+    </div>
+</div>
+</body>
+</html>

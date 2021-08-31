@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.mx/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<head>
+    <title>Fiche d'un type </title>
+</head>
+<body>
+<div class="container">
+    <div layout:fragment="content">
+        <h1 th:text="${#strings.capitalize(type.typeName)}">Acteur</h1>
+
+        <h2>Liste des artistes</h2>
+        <ul th:unless="${#lists.isEmpty(type.artists)}">
+            <li th:each="artist : ${type.artists}"
+                th:text="|${artist.firstname} ${artist.lastname}|">Firstname Lastname</li>
+        </ul><br/>
+        <table>
+            <tr>
+
+                <td><a th:href="@{'/types/edit/'+ ${type.id}}" class="btn btn-default">Edit</a></td>
+
+                <form th:id="|deleteForm-${type.id}|"
+                      th:action="@{'/types/delete/'+ ${type.id}}" th:method="delete">
+                    <!--delete form -->
+
+                    <td> <a href="#"  th:onclick="|if(confirm('Confirm delete type #${type.id}'))
+                document.getElementById('deleteForm-${type.id}').submit();
+                    return false;|" class="btn btn-danger">Delete</a></td> <!-- alert with javascript -->
+
+                </form>
+            </tr>
+
+            <tr> <td><a th:href="@{/types}" class="btn btn-link">Retour</a></td></tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>
